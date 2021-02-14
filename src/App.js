@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
@@ -27,19 +27,7 @@ function App() {
     event.preventDefault();
     fetchLeagueUsers();
     } 
-
-  // const showLeagueUsers = () => {
-  //   leagueUsers.map((item) => {
-  //     return <p>{item.display_name}</p>
-  //   })
-  // }
-    
-  // useEffect(() => {
-  //   showLeagueUsers();
-  // }, [leagueUsers])
-
   
-
   return (
     <main className="App">
       <section>
