@@ -1,24 +1,61 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+
+  const [leagueID, setLeagueID] = useState('');
+  const [leagueUsers, setLeagueUsers] = useState(['football', 'choco']);
+
+  async function fetchLeagueUsers() {
+    try {
+      const res = await fetch(`https://api.sleeper.app/v1/league/${leagueID}/users`); 
+
+      const data = await res.json();
+      console.log(data);
+      setLeagueUsers(data);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleChange = (event) => {
+    setLeagueID(event.target.value);
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetchLeagueUsers();
+    } 
+
+  // const showLeagueUsers = () => {
+  //   leagueUsers.map((item) => {
+  //     return <p>{item.display_name}</p>
+  //   })
+  // }
+    
+  // useEffect(() => {
+  //   showLeagueUsers();
+  // }, [leagueUsers])
+
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="App">
+      <section>
+        <form onSubmit={handleSubmit}>
+          <input type="text" value={leagueID} onChange={handleChange}/>
+          <input type="submit" value="Show League Users"/>
+        </form>
+      </section>
+      <section>
+        <h1>League Users</h1>
+        <div>
+          {leagueUsers.map((item, i) => {
+      return <p key={i}>{item.display_name}</p>})}
+        </div>
+      </section>
+    </main>
   );
 }
 
